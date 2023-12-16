@@ -1,6 +1,6 @@
 <?php
 require_once 'models/Article.php';
-require_once('services/ArticleService.php');
+require_once'services/ArticleService.php';
 
 class ArticleController
 {
@@ -20,11 +20,10 @@ class ArticleController
         if(isset($_POST['add'])){
         
             $title = $_POST['title'];
-            $author = $_POST['author'];
-            $publish = $_POST['publish'];
+            $content= $_POST['content'];
 
        
-            $newArticle = new Article(null, $title, $author, $publish);
+            $newArticle = new Article(null, $title, $content);
             $articleService->insertData($newArticle);
             echo "ADD new successfully";
             header("location: index.php?controller=article&action=index");}
@@ -61,12 +60,10 @@ class ArticleController
         
             
         $title = $_POST['title'];
-        $author = $_POST['author'];
-        $publish = $_POST['publish'];
+        $content= $_POST['content'];
             
         $chosenArticle->setTitle($title);
-        $chosenArticle->setAuthor($author);
-        $chosenArticle->setPublish($publish);
+        $chosenArticle->setContent($content);  
         $articleService->updateData($chosenArticle);
         echo "Edit successfully";
         header("location: index.php?controller=article&action=index");}

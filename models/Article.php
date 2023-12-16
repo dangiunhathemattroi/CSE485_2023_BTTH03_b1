@@ -6,6 +6,7 @@ class Article
     private $id;
     private $title;
     private $content;
+    private $db;
 
     public function __construct($id, $title, $content){
         $this->id       =$id;

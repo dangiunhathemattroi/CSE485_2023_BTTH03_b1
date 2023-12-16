@@ -8,7 +8,7 @@ class ArticleController
     public function index()
     {
         //Lay du lieu tu server tuong ung 
-        $articleServer = new ArticleServer();
+       // $articleServer = new ArticleServer();
         $articles = Article::getAll();
         require 'views/articles/index.php';
     }
@@ -58,7 +58,6 @@ class ArticleController
         $chosenArticle = $articleService->getData($id);
         if(isset($_POST['edit'])){
         
-            
         $title = $_POST['title'];
         $content= $_POST['content'];
             
@@ -71,21 +70,21 @@ class ArticleController
         include("views/edit.php");
     } 
 
-    // Delete the specified article from the database
-    // public function delete()
-    // {
-    //     $articleService = new ArticleService();
-    //     $id = $_GET['id'];
-    //     $chosenArticle = $articleService->getData($id);
-    //     if(isset($_POST['delete'])){
-    //         $articleService->deleteData($chosenArticle);
-    //         header("location: index.php?controller=article&action=index");
-    //     }
-    //     else if(isset($_POST['noDelete'])){
-    //         header("location: index.php?controller=article&action=index");
-    //     }
-    //     // Render ra view
-    //     include("../views/delete.php");
-    // }
+    //Delete the specified article from the database
+    public function delete()
+    {
+        $articleService = new ArticleService();
+        $id = $_GET['id'];
+        $chosenArticle = $articleService->getData($id);
+        if(isset($_POST['delete'])){
+            $articleService->deleteData($chosenArticle);
+            header("location: index.php?controller=article&action=index");
+        }
+        else if(isset($_POST['noDelete'])){
+            header("location: index.php?controller=article&action=index");
+        }
+        // Render ra view
+        include("../views/delete.php");
+}
 }
 ?>

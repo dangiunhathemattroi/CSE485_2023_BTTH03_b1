@@ -10,6 +10,7 @@ $controllerClass = ucfirst($controller) . 'Controller';
 
 // Instantiate the controller
 $controllerFile = "controllers/$controllerClass.php";
+
 if (file_exists($controllerFile)) {
     require_once $controllerFile;
     $controllerInstance = new $controllerClass();

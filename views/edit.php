@@ -15,7 +15,7 @@
         <label for="content">Content:</label>
         <textarea name="content" id="content" required><?php echo $article['content']; ?></textarea>
 
-        <input type="submit" value="Update">
+        <input name="edit" type="submit" value="Update">
     </form>
 </body>
 </html>

@@ -8,13 +8,46 @@ class Article
     private $content;
     private $db;
 
-    public function __construct($id, $title, $content){
-        $this->id       =$id;
-        $this->title    =$title;
+    public function __construct($id = null, $title = '', $content = '')
+    {
+        $this->db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+        $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $this->id = $id;
+        $this->title = $title;
         $this->content = $content;
     }
 
-   
+    public static function getAll()
+    {
+        $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $query = $db->query('SELECT * FROM articles');
+        return $query->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public static function getById($id)
+    {
+        $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        $query = $db->prepare('SELECT * FROM articles WHERE id = :id');
+        $query->bindParam(':id',$id, PDO::PARAM_INT);
+        $query->execute();
+
+        return $query->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    }
+
+    public function setContent($content)
+    {
+        $this->content = $content;
+    }
 
     public function save()
     {
@@ -26,6 +59,7 @@ class Article
 
     public function update()
     {
+
         $query = $this->db->prepare('UPDATE articles SET title = :title, content = :content WHERE id = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
         $query->bindParam(':title', $this->title, PDO::PARAM_STR);
@@ -73,13 +107,6 @@ class Article
      *
      * @return  self
      */ 
-    public function setTitle($title)
-    {
-        $this->title = $title;
-
-        return $this;
-    }
-
     /**
      * Get the value of content
      */ 
@@ -93,11 +120,6 @@ class Article
      *
      * @return  self
      */ 
-    public function setContent($content)
-    {
-        $this->content = $content;
-
-        return $this;
-    }
+   
 }
 ?>

@@ -1,7 +1,6 @@
 <?php
-// Database configuration
-define('DB_HOST', 'your_database_host');
-define('DB_NAME', 'your_database_name');
-define('DB_USER', 'your_database_user');
-define('DB_PASS', 'your_database_password');
+define('DB_HOST', 'localhost:3306');
+define('DB_NAME', 'myArticles');
+define('DB_USER', 'root');
+define('DB_PASS', 'buithuyngoc2003');
 ?>

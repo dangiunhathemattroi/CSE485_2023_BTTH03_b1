@@ -1,6 +1,6 @@
 <?php
 require_once 'models/Article.php';
-require_once'services/ArticleService.php';
+require_once 'services/ArticleService.php';
 
 class ArticleController
 {
@@ -10,6 +10,7 @@ class ArticleController
         //Lay du lieu tu server tuong ung 
        // $articleServer = new ArticleServer();
         $articles = Article::getAll();
+
         require 'views/articles/index.php';
     }
 
@@ -30,8 +31,6 @@ class ArticleController
             
         
         // Render ra view
-        include("views/create.php");
-  
     
         require 'views/articles/create.php';
     }
@@ -55,19 +54,23 @@ class ArticleController
     {
         $articleService = new ArticleService();
         $id = $_GET['id'];
-        $chosenArticle = $articleService->getData($id);
-        if(isset($_POST['edit'])){
         
-        $title = $_POST['title'];
-        $content= $_POST['content'];
+        $article = $articleService->getData($id);
+
+        if(isset($_POST['edit'])){
             
-        $chosenArticle->setTitle($title);
-        $chosenArticle->setContent($content);  
-        $articleService->updateData($chosenArticle);
-        echo "Edit successfully";
-        header("location: index.php?controller=article&action=index");}
+            $title = $_POST['title'];
+            $content= $_POST['content'];
+            
+            $article->setTitle($title);
+            $article->setContent($content);  
+            $articleService->updateData($article);
+            echo "Edit successfully";
+            header("location: index.php?controller=article&action=index");
+        }
+
         // Render ra view
-        include("views/edit.php");
+        require 'views/articles/edit.php';
     } 
 
     //Delete the specified article from the database
@@ -84,7 +87,7 @@ class ArticleController
             header("location: index.php?controller=article&action=index");
         }
         // Render ra view
-        include("../views/delete.php");
+        include("views/articles/delete.php");
 }
 }
 ?>

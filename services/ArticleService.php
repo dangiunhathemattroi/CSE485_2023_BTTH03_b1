@@ -5,9 +5,8 @@ class ArticleService{
     // Cac phuong thuc thao tac voi DB Server
     public static function getAll(){
         // Buoc 1: Ket noi DB Server
-        
         try {
-            $conn = new PDO('mysql:host=localhost;dbname=articles','root','');
+             $conn = new PDO('mysql:host=localhost:3306;dbname=myArticles','root','buithuyngoc2003');
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -28,7 +27,7 @@ class ArticleService{
     public static function insertData($objArticle){
         // Buoc 1: Ket noi DB Server
         try {
-            $conn = new PDO('mysql:host=localhost;dbname=articles','root','');
+             $conn = new PDO('mysql:host=localhost:3306;dbname=myArticles','root','buithuyngoc2003');
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -44,7 +43,7 @@ class ArticleService{
     public static function getData($id){
         // Buoc 1: Ket noi DB Server
         try {
-            $conn = new PDO('mysql:host=localhost;dbname=articles','root','');
+             $conn = new PDO('mysql:host=localhost:3306;dbname=myArticles','root','buithuyngoc2003');
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -52,15 +51,16 @@ class ArticleService{
         // Buoc 2: Thuc hien truy van
         $sql = "SELECT * FROM articles WHERE id = $id";
         $stmt = $conn->query($sql)->fetch();
-        $chosenArticle = new Article($stmt['id'], $stmt['title'], $stmt['content']);
-        return $chosenArticle;
+        $article = new Article($stmt['id'], $stmt['title'], $stmt['content']);
+
+        return $article;
     }
 
      // Sửa dữ liệu bảng
      public function updateData($objArticle){
           // Buoc 1: Ket noi DB Server
           try {
-            $conn = new PDO('mysql:host=localhost;dbname=articles','root','');
+             $conn = new PDO('mysql:host=localhost:3306;dbname=myArticles','root','buithuyngoc2003');
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
@@ -79,11 +79,12 @@ class ArticleService{
     public function deleteData($objArticle){
         // Buoc 1: Ket noi DB Server
         try {
-            $conn = new PDO('mysql:host=localhost;dbname=articles','root','');
+            $conn = new PDO('mysql:host=localhost:3306;dbname=myArticles','root','buithuyngoc2003');
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
         $ID = $objArticle->getId();
+        
         $sql = "DELETE FROM articles WHERE id = $ID";
         $conn->query($sql);
     }

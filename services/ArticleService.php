@@ -59,17 +59,19 @@ class ArticleService{
      // Sửa dữ liệu bảng
      public function updateData($objArticle){
           // Buoc 1: Ket noi DB Server
-          try {
-             $conn = new PDO('mysql:host=localhost:3306;dbname=myArticles','root','buithuyngoc2003');
+        try {
+            $conn = new PDO('mysql:host=localhost:3306;dbname=myArticles','root','buithuyngoc2003');
         } catch (PDOException $e) {
             echo $e->getMessage();
         }
 
-        $ID = $objArticle->getId();
+        $id = $objArticle->getId();
         $newTitle = $objArticle->getTitle();
         $newContent = $objArticle->getContent();
+
+
         // Buoc 2: Thuc hien truy van
-        $sql = "UPDATE articles SET title = '$newTitle', content = '$newContent' WHERE id = $ID";
+        $sql = "UPDATE articles SET title = '$newTitle', content = '$newContent' WHERE id = $id";
         $conn->query($sql);
 
        

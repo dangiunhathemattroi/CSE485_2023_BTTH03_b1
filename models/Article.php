@@ -59,6 +59,7 @@ class Article
 
     public function update()
     {
+
         $query = $this->db->prepare('UPDATE articles SET title = :title, content = :content WHERE id = :id');
         $query->bindParam(':id', $this->id, PDO::PARAM_INT);
         $query->bindParam(':title', $this->title, PDO::PARAM_STR);

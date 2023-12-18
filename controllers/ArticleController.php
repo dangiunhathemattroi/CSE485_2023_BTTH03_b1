@@ -8,31 +8,14 @@ class ArticleController
     public function index()
     {
         //Lay du lieu tu server tuong ung 
-       // $articleServer = new ArticleServer();
         $articles = Article::getAll();
-
-        require 'views/articles/index.php';
+        require 'views/index.php';
     }
 
     // Display the article creation form
     public function create(){
-    $articleService = new ArticleService();
-      
-        if(isset($_POST['add'])){
-        
-            $title = $_POST['title'];
-            $content= $_POST['content'];
-
-       
-            $newArticle = new Article(null, $title, $content);
-            $articleService->insertData($newArticle);
-            echo "ADD new successfully";
-            header("location: index.php?controller=article&action=index");}
-            
-        
-        // Render ra view
-    
-        require 'views/articles/create.php';
+        $articleService = new ArticleService();
+        require 'views/create.php';
     }
 
     // Store a newly created article in the database
@@ -52,42 +35,34 @@ class ArticleController
     // Display the article editing form
     public function edit()
     {
-        $articleService = new ArticleService();
         $id = $_GET['id'];
-        
-        $article = $articleService->getData($id);
-
-        if(isset($_POST['edit'])){
-            
-            $title = $_POST['title'];
-            $content= $_POST['content'];
-            
-            $article->setTitle($title);
-            $article->setContent($content);  
-            $articleService->updateData($article);
-            echo "Edit successfully";
-            header("location: index.php?controller=article&action=index");
-        }
-
+        $article = Article::getById($id);
         // Render ra view
-        require 'views/articles/edit.php';
+        require 'views/edit.php';
     } 
+
+    public function update() {
+        $id = $_POST['id'];
+        $title = $_POST['title'];
+        $content= $_POST['content'];
+
+        $newArticle = new Article();
+        $newArticle->setId($id);
+        $newArticle->setTitle($title);
+        $newArticle->setContent($content);
+
+        $newArticle->update();
+        header('Location: index.php?controller=article&action=index');
+
+    }
 
     //Delete the specified article from the database
     public function delete()
     {
-        $articleService = new ArticleService();
         $id = $_GET['id'];
-        $chosenArticle = $articleService->getData($id);
-        if(isset($_POST['delete'])){
-            $articleService->deleteData($chosenArticle);
-            header("location: index.php?controller=article&action=index");
-        }
-        else if(isset($_POST['noDelete'])){
-            header("location: index.php?controller=article&action=index");
-        }
-        // Render ra view
-        include("views/articles/delete.php");
+        $article = new Article($id, null, null);
+        $article->delete();
+        header('Location: index.php?controller=article&action=index');
 }
 }
 ?>
